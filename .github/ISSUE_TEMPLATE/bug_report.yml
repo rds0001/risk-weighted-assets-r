@@ -1,0 +1,38 @@
+name: Bug report
+description: Report a reproducible defect in the R package.
+title: "[Bug]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for helping improve riskweightedassets.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproducible example
+      description: Use synthetic or otherwise non-confidential data only.
+      render: R
+    validations:
+      required: true
+  - type: textarea
+    id: session
+    attributes:
+      label: Session information
+      description: Paste the output of sessionInfo().
+      render: text
+    validations:
+      required: true
+  - type: checkboxes
+    id: confidentiality
+    attributes:
+      label: Data protection
+      options:
+        - label: I confirm that this issue contains no personal, confidential or bank-sensitive data.
+          required: true

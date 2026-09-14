@@ -1,0 +1,37 @@
+Package: riskweightedassets
+Type: Package
+Title: Reproducible Risk-Weighted Asset Calculations
+Version: 1.0.0
+Authors@R: person(given = "RiskDataScience", family = "GmbH",
+    email = "riskdatascience@web.de", role = c("aut", "cre", "cph"))
+Description: Provides transparent, deterministic and auditable calculations
+    of risk-weighted assets, own-funds requirements, interest-rate risk in the
+    banking book and related capital metrics. It supports canonical in-memory
+    tables and versioned spreadsheet datasets, strict validation, synthetic
+    reference profiles, bitemporal snapshots, calculation controls and
+    traceable regulatory source metadata. The implementation is intended for
+    analytical, educational and model-validation use and does not constitute
+    legal or supervisory advice.
+License: GPL-3
+URL: https://github.com/rds0001/risk-weighted-assets-r,
+    https://riskdatascience.net/impressum/,
+    https://riskdatascience.net/datenschutzerklaerung/
+BugReports: https://github.com/rds0001/risk-weighted-assets-r/issues
+Encoding: UTF-8
+Date: 2026-09-14
+Depends: R (>= 4.1.0)
+Imports:
+    digest,
+    jsonlite,
+    openxlsx,
+    readxl,
+    utils,
+    yaml
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+VignetteBuilder: knitr

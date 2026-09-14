@@ -1,0 +1,9 @@
+bibentry(
+  bibtype = "Manual",
+  title = "riskweightedassets: Reproducible Risk-Weighted Asset Calculations",
+  author = person("RiskDataScience GmbH"),
+  year = "2026",
+  note = "R package",
+  url = "https://github.com/rds0001/risk-weighted-assets-r"
+)
+

@@ -1,0 +1,49 @@
+---
+title: "Getting started with riskweightedassets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with riskweightedassets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+The package provides an auditable R workflow for canonical risk-weighted asset
+data. Start by inspecting the two bundled profiles.
+
+```{r}
+library(riskweightedassets)
+list_reference_profiles()
+```
+
+Generate native R tables without writing files.
+
+```{r}
+tables <- generate_synthetic_tables(bank_profile = "KSA_BANK")
+length(tables)
+names(tables)[1:12]
+```
+
+A full calculation is intentionally not executed while building this vignette
+because it calculates applied and fully-loaded views. Run it interactively:
+
+```{r, eval=FALSE}
+result <- calculate_tables(tables)
+print(result)
+unlist(result$metrics[c("RWEA_KSA", "TREA", "CET1_RATIO")])
+```
+
+For a spreadsheet workflow, write only below a controlled caller-owned path:
+
+```{r, eval=FALSE}
+dataset <- generate_synthetic_dataset(
+  file.path(tempdir(), "rwa-runs"), bank_profile = "KSA_BANK"
+)
+validate_dataset(dataset)
+result <- calculate_dataset(dataset)
+```
+
+The data is synthetic, and the package is not regulatory or legal advice.

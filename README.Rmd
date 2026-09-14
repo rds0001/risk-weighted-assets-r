@@ -1,0 +1,27 @@
+---
+output: github_document
+---
+
+<!-- Edit this source and render README.md with rmarkdown::render(). -->
+
+# riskweightedassets
+
+`riskweightedassets` is the R implementation of the RiskDataScience GmbH
+reference engine for CRR III risk-weighted assets, regulatory capital, IRRBB
+and ICAAP. It supplies canonical Excel contracts, realistic synthetic data,
+bitemporal snapshots, deterministic lineage and reconciliation controls.
+
+```{r, eval=FALSE}
+library(riskweightedassets)
+tables <- generate_synthetic_tables(bank_profile = "MID_SIZE_UNIVERSAL")
+result <- calculate_tables(tables)
+result$metrics[c("RWEA_KSA", "RWEA_IRB", "TREA", "CET1_RATIO")]
+```
+
+See the committed `README.md` and `docs/` tree for the complete project
+documentation. The package contains no customer data and redistributes no
+downloaded regulatory documents.
+
+Copyright © 2026 RiskDataScience GmbH. GPL-3. Imprint:
+<https://riskdatascience.net/impressum/>. Privacy policy:
+<https://riskdatascience.net/datenschutzerklaerung/>.

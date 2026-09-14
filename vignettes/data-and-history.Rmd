@@ -1,0 +1,35 @@
+---
+title: "Canonical data, history and validation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Canonical data, history and validation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+The engine consumes 68 named tables. Each historised record distinguishes
+business validity from the time at which the information became known. The
+official snapshot is therefore reproducible after subsequent corrections.
+
+```{r}
+library(riskweightedassets)
+tables <- generate_synthetic_tables()
+head(tables$run_config[c("config_key", "config_value")])
+head(tables$exposure_lot[c("record_id", "business_key", "valid_from",
+                           "known_from", "is_official")])
+```
+
+Workbook validation returns structured messages rather than prose-only logs.
+
+```{r, eval=FALSE}
+report <- validate_dataset("path/to/dataset")
+issues <- as.data.frame(report)
+subset(issues, severity == "ERROR")
+```
+
+Technical validation cannot decide institution-specific scope, permissions or
+legal interpretation. Those remain governed inputs.

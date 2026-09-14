@@ -1,0 +1,30 @@
+---
+title: "Methodology, controls and result interpretation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Methodology, controls and result interpretation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+The pipeline calculates credit SA and IRB, CRM, CCR/SFT/CCP, CVA,
+securitisation, settlement, large exposures, market and operational risk,
+capital constraints, IRRBB/CSRBB and ICAAP. A Standardised shadow view supplies
+the output-floor denominator. Applied and fully-loaded rule sets use the same
+official bitemporal snapshot.
+
+```{r, eval=FALSE}
+library(riskweightedassets)
+result <- calculate_tables(generate_synthetic_tables())
+names(result$results)
+result$controls
+```
+
+Every result table adds run, formula-version, reporting date, knowledge time,
+rule set, view and official-status metadata. A successful reference result has
+no validation errors and every reconciliation control passes. Production use
+still requires independent legal, data, model and reporting governance.
