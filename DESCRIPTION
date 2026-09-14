@@ -1,7 +1,7 @@
 Package: riskweightedassets
 Type: Package
 Title: Reproducible Risk-Weighted Asset Calculations
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: person(given = "RiskDataScience", family = "GmbH",
     email = "riskdatascience@web.de", role = c("aut", "cre", "cph"))
 Description: Provides transparent, deterministic and auditable calculations
@@ -9,7 +9,9 @@ Description: Provides transparent, deterministic and auditable calculations
     banking book and related capital metrics. It supports canonical in-memory
     tables and versioned spreadsheet datasets, strict validation, synthetic
     reference profiles, bitemporal snapshots, calculation controls and
-    traceable regulatory source metadata. The implementation is intended for
+    traceable regulatory source metadata. A granular analyst API exposes
+    individual formulae, domain views, controls, schemas and auditable
+    parameter overrides. The implementation is intended for
     analytical, educational and model-validation use and does not constitute
     legal or supervisory advice.
 License: GPL-3

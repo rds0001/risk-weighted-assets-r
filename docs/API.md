@@ -1,12 +1,13 @@
 # Public R API
 
-The public surface is deliberately small. Calculation details remain internal
-so that validation, temporal selection, formula versioning and controls cannot
-be bypassed accidentally.
+The public surface is deliberately granular and designed from the perspective
+of a bank analyst. It exposes 73 documented functions covering controlled
+workflows, individual formulae, domain views, parameters, schemas, metrics,
+tables and controls. Mutable orchestration internals remain private.
 
 ## Calculation
 
-- `calculate_tables(tables, run_id = NULL, project_root = NULL)` validates and
+- `calculate_tables(tables, run_id = NULL, project_root = NULL, ...)` validates and
   calculates an in-memory named list of 68 canonical data frames. It returns an
   `rwa_calculation_result` and performs no spreadsheet writes.
 - `validate_dataset(dataset)` reads the 16 canonical input workbooks and returns
@@ -32,6 +33,24 @@ be bypassed accidentally.
 - `regulatory_sources()` returns official links and checksums, never document
   bodies.
 
+## Analyst-level access and control
+
+- 34 formula functions cover SA, IRB, CRM, CCR, SFT, securitisation, CVA,
+  settlement, operational risk, output floor, NPE, Tier 2, FRTB, IRRBB and
+  correlated economic capital.
+- Nine `analyze_*()` functions return focused metrics, result tables and
+  controls from canonical tables or an existing result.
+- `rwa_metric()`, `rwa_metrics()`, `rwa_result_table()`, `rwa_controls()` and
+  `compare_calculation_views()` provide stable result access.
+- `regulatory_parameters()`, `regulatory_parameter()` and
+  `override_regulatory_parameters()` expose every weight and allow explicit,
+  non-mutating, audited sensitivity changes.
+- Formula catalogue, rule sets, schemas and the bitemporal official snapshot
+  are public without requiring `:::`.
+
+See [ANALYST_API.md](ANALYST_API.md) for the complete map. Every export has
+native R help generated from roxygen2.
+
 ## Returned classes
 
 `rwa_validation_report` contains a list of structured messages. Convert it with
@@ -39,8 +58,9 @@ be bypassed accidentally.
 `message` columns.
 
 `rwa_calculation_result` contains status, deterministic run identifier, engine
-and rule-set versions, 63 headline metrics, 12 controls, validation messages,
-34 applied result tables, 34 parallel result tables and optional output paths.
+and rule-set versions, 63 applied and 63 fully-loaded headline metrics,
+applied and parallel controls, validation messages, 34 applied and 34 parallel
+result tables, parameter-override evidence and optional output paths.
 
 `rwa_workspace` contains `root`, `data_root`, `runs_root`,
 `configuration_root` and `standards_root` paths.
@@ -69,4 +89,4 @@ stopifnot(result$status == "CALCULATED")
 metrics <- unlist(result$metrics[c("TREA", "CET1_RATIO")])
 ```
 
-Detailed pages for every public function are in [`functions/`](functions/).
+Native manpages for every public function are installed with the package.

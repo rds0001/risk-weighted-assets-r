@@ -73,7 +73,9 @@ new_calculation_result <- function(status, run_id, engine_version, rule_set_id,
                                    metrics = list(), controls = list(),
                                    validation = new_validation_report(),
                                    output_dir = NULL, output_files = character(),
-                                   results = list(), parallel_results = list()) {
+                                   results = list(), parallel_results = list(),
+                                   parallel_metrics = list(), parallel_controls = list(),
+                                   parameter_overrides = data.frame()) {
   structure(
     list(
       status = as.character(status), run_id = as.character(run_id),
@@ -81,7 +83,10 @@ new_calculation_result <- function(status, run_id, engine_version, rule_set_id,
       rule_set_id = as.character(rule_set_id), metrics = metrics,
       controls = controls, validation = validation, output_dir = output_dir,
       output_files = output_files, results = results,
-      parallel_results = parallel_results
+      parallel_results = parallel_results,
+      parallel_metrics = parallel_metrics,
+      parallel_controls = parallel_controls,
+      parameter_overrides = parameter_overrides
     ),
     class = "rwa_calculation_result"
   )

@@ -1,3 +1,5 @@
+PACKAGE_VERSION := $(shell sed -n 's/^Version: //p' DESCRIPTION)
+
 .PHONY: document test check build as-cran manual verify clean
 
 document:
@@ -13,7 +15,7 @@ build:
 	R CMD build .
 
 as-cran: build
-	R CMD check --as-cran riskweightedassets_1.0.0.tar.gz
+	R CMD check --as-cran riskweightedassets_$(PACKAGE_VERSION).tar.gz
 
 manual:
 	R CMD Rd2pdf --no-preview --force --output=riskweightedassets-reference.pdf .

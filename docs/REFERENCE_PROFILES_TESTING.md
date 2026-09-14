@@ -43,7 +43,7 @@ devtools::check()
 
 ```sh
 R CMD build .
-R CMD check --as-cran riskweightedassets_1.0.0.tar.gz
+R CMD check --as-cran riskweightedassets_1.1.0.tar.gz
 ```
 
 Run the commands in a clean, current R installation. The package itself

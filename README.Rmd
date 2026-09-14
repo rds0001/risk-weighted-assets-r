@@ -18,6 +18,11 @@ result <- calculate_tables(tables)
 result$metrics[c("RWEA_KSA", "RWEA_IRB", "TREA", "CET1_RATIO")]
 ```
 
+The public API also provides individual regulatory formulae, nine focused
+risk-domain analyses, applied/fully-loaded comparison, schema and formula
+catalogues, and auditable non-mutating parameter overrides. See
+`docs/ANALYST_API.md`.
+
 See the committed `README.md` and `docs/` tree for the complete project
 documentation. The package contains no customer data and redistributes no
 downloaded regulatory documents.

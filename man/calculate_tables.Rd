@@ -4,7 +4,14 @@
 \alias{calculate_tables}
 \title{Calculate Canonical In-Memory Tables}
 \usage{
-calculate_tables(tables, run_id = NULL, project_root = NULL)
+calculate_tables(
+  tables,
+  run_id = NULL,
+  project_root = NULL,
+  parameter_overrides = NULL,
+  override_reason = NULL,
+  override_approved_by = NULL
+)
 }
 \arguments{
 \item{tables}{Named list of canonical data frames.}
@@ -12,6 +19,12 @@ calculate_tables(tables, run_id = NULL, project_root = NULL)
 \item{run_id}{Optional caller-defined run identifier.}
 
 \item{project_root}{Optional root used to resolve local source documents.}
+
+\item{parameter_overrides}{Optional data frame of controlled parameter
+overrides prepared as described in \code{\link[=override_regulatory_parameters]{override_regulatory_parameters()}}.}
+
+\item{override_reason, override_approved_by}{Required non-empty governance
+information when \code{parameter_overrides} is supplied.}
 }
 \value{
 An \code{rwa_calculation_result} object.
