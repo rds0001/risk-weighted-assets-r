@@ -3,8 +3,8 @@
 Date: 2026-09-14  
 Platform: Linux x86_64  
 R: 4.1.2  
-Candidate: `riskweightedassets_1.0.0.tar.gz`  
-SHA-256: `f407a198bab45ed7eafff9595fed2c140098bdf2995af735abc5601a569c288e`
+Candidate: `riskweightedassets_1.1.0.tar.gz`
+SHA-256: `024a94167a05d45294d5cfdd20925df55420ac18794beec3a9cd7e36aab94cf3`
 
 ## Results
 
@@ -16,10 +16,12 @@ SHA-256: `f407a198bab45ed7eafff9595fed2c140098bdf2995af735abc5601a569c288e`
   time could not be verified).
 - Installed-tarball smoke test: successful installation, KSA dataset creation,
   calculation, six result workbooks and run manifest.
-- Test inventory in the final built-tarball check: 126 passed, 0 failed,
+- Test inventory in the final built-tarball check: 142 passed, 0 failed,
   0 skipped.
+- Export/documentation gate: all 73 exports have installed Rd aliases; all 34
+  granular formula wrappers execute through the public namespace.
 
-The old R 4.1 development environment reports 148 `testthat` warnings saying
+The old R 4.1 development environment reports 168 `testthat` warnings saying
 that changing language has no effect while `LC_ALL=C.UTF-8`; these originate in
 the installed `testthat`/`withr` locale helper on each expectation. They do not
 originate in package calculations, and R CMD check classifies the test stage as

@@ -29,7 +29,7 @@ advice and is not a certified regulatory reporting system.
 During development, build and install the local source package:
 
 ```r
-install.packages("riskweightedassets_1.0.0.tar.gz", repos = NULL, type = "source")
+install.packages("riskweightedassets_1.1.0.tar.gz", repos = NULL, type = "source")
 ```
 
 After CRAN acceptance the standard command will be:
@@ -48,6 +48,31 @@ result <- calculate_tables(tables)
 print(result)
 result$metrics[c("RWEA_KSA", "RWEA_IRB", "TREA", "CET1_RATIO")]
 ```
+
+## Granular analyst API
+
+The package exposes 73 documented public functions. Analysts can calculate an
+individual formula, inspect or override a regulatory weight, extract one
+result table, compare applied and fully-loaded metrics, or obtain a focused
+risk-domain analysis without using private package internals.
+
+```r
+sa_exposure_value(100, 2, committed_undrawn = 40, annex_i_class = "CLASS_2")
+irb_capital_requirement(.01, .45, .20, 2.5)
+
+tables <- generate_synthetic_tables(bank_profile = "KSA_BANK")
+override <- data.frame(
+  parameter_key = "RWA_MULTIPLIER", dimension_1 = "PILLAR1",
+  dimension_2 = "", parameter_value = 13
+)
+scenario_tables <- override_regulatory_parameters(
+  tables, override, reason = "Sensitivity analysis", approved_by = "Model Risk"
+)
+parameter_overrides(scenario_tables)
+```
+
+See the [bank-analyst API map](docs/ANALYST_API.md) for the complete functional
+inventory and governance rules.
 
 ## Excel workflow
 
@@ -84,6 +109,7 @@ documents remain outside the distribution.
 - [complete standalone documentation](docs/RISKWEIGHTEDASSETS_COMPLETE_DOCUMENTATION.md)
 - [generated R function reference manual](docs/riskweightedassets-reference.pdf)
 - [public R API](docs/API.md)
+- [bank-analyst API map](docs/ANALYST_API.md)
 - [architecture](docs/ARCHITECTURE.md)
 - [data model](docs/DATA_MODEL.md)
 - [Pillar 1 and capital methodology](docs/METHODOLOGY.md)

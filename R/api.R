@@ -35,6 +35,10 @@ validate_tables_public <- function(tables) {
 #' @param tables Named list of canonical data frames.
 #' @param run_id Optional caller-defined run identifier.
 #' @param project_root Optional root used to resolve local source documents.
+#' @param parameter_overrides Optional data frame of controlled parameter
+#'   overrides prepared as described in [override_regulatory_parameters()].
+#' @param override_reason,override_approved_by Required non-empty governance
+#'   information when `parameter_overrides` is supplied.
 #' @return An `rwa_calculation_result` object.
 #' @details The return includes applied and fully-loaded result tables. All
 #'   calculations use one official bitemporal snapshot. The function does not
@@ -45,7 +49,16 @@ validate_tables_public <- function(tables) {
 #' result <- calculate_tables(tables)
 #' result$metrics[c("RWEA_KSA", "TREA")]
 #' @export
-calculate_tables <- function(tables, run_id = NULL, project_root = NULL) {
+calculate_tables <- function(tables, run_id = NULL, project_root = NULL,
+                             parameter_overrides = NULL, override_reason = NULL,
+                             override_approved_by = NULL) {
+  if (!is.null(parameter_overrides)) {
+    tables <- override_regulatory_parameters(
+      tables, parameter_overrides,
+      reason = override_reason %||% attr(parameter_overrides, "reason") %||% "",
+      approved_by = override_approved_by %||% attr(parameter_overrides, "approved_by") %||% ""
+    )
+  }
   report <- validate_tables_public(tables)
   if (!validation_valid(report)) abort_validation(
     sprintf("Input validation failed with %d error(s)", length(validation_errors(report))),
@@ -63,7 +76,10 @@ calculate_tables <- function(tables, run_id = NULL, project_root = NULL) {
     "CALCULATED", effective_run_id, engine_version(), execution$context$rule_set_id,
     metrics = execution$applied$metrics, controls = execution$applied$controls,
     validation = execution$report, results = execution$applied$results,
-    parallel_results = execution$parallel$results)
+    parallel_results = execution$parallel$results,
+    parallel_metrics = execution$parallel$metrics,
+    parallel_controls = execution$parallel$controls,
+    parameter_overrides = attr(tables, "rwa_parameter_overrides") %||% data.frame())
 }
 
 input_directory_fingerprint <- function(input_dir) {
@@ -125,5 +141,8 @@ calculate_dataset <- function(dataset) {
     metrics = execution$applied$metrics, controls = execution$applied$controls,
     validation = execution$report, output_dir = normalizePath(output_dir, winslash = "/"),
     output_files = files, results = execution$applied$results,
-    parallel_results = execution$parallel$results)
+    parallel_results = execution$parallel$results,
+    parallel_metrics = execution$parallel$metrics,
+    parallel_controls = execution$parallel$controls,
+    parameter_overrides = attr(loaded$tables, "rwa_parameter_overrides") %||% data.frame())
 }

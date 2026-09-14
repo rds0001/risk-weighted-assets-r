@@ -5,7 +5,7 @@
 R 4.1 or newer is required. From a local source tarball:
 
 ```r
-install.packages("riskweightedassets_1.0.0.tar.gz", repos = NULL, type = "source")
+install.packages("riskweightedassets_1.1.0.tar.gz", repos = NULL, type = "source")
 library(riskweightedassets)
 list_reference_profiles()
 ```
@@ -42,7 +42,7 @@ Then always check the built artifact, not only the working directory:
 
 ```sh
 R CMD build .
-R CMD check --as-cran riskweightedassets_1.0.0.tar.gz
+R CMD check --as-cran riskweightedassets_1.1.0.tar.gz
 ```
 
 Review `00check.log`, `00install.out`, source-tarball contents and package sizes.

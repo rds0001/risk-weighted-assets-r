@@ -8,6 +8,7 @@ documents are not part of the repository or package.
 | [Complete documentation](RISKWEIGHTEDASSETS_COMPLETE_DOCUMENTATION.md) | Standalone end-to-end manual |
 | [R reference manual](riskweightedassets-reference.pdf) | Generated package and function reference |
 | [API](API.md) | Public functions, objects and integration patterns |
+| [Bank-analyst API](ANALYST_API.md) | Granular formula, domain and control interface |
 | [Architecture](ARCHITECTURE.md) | Components, data flow and side-effect boundaries |
 | [Data model](DATA_MODEL.md) | Canonical tables, history and spreadsheet layout |
 | [Methodology](METHODOLOGY.md) | Pillar 1, capital, IRRBB and ICAAP methods |

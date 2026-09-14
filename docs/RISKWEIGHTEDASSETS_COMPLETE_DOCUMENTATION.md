@@ -22,7 +22,7 @@ or supervisory approval.
 R 4.1 or newer is required. Install a built source package with:
 
 ```r
-install.packages("riskweightedassets_1.0.0.tar.gz", repos = NULL, type = "source")
+install.packages("riskweightedassets_1.1.0.tar.gz", repos = NULL, type = "source")
 library(riskweightedassets)
 ```
 
@@ -58,7 +58,7 @@ result <- calculate_dataset(dataset)
 
 ## 4. Public API
 
-The package exports ten functions:
+The package exports 73 documented functions. The controlled lifecycle remains:
 
 - `calculate_tables()` calculates a named list of 68 canonical data frames and
   returns applied and fully-loaded results without writing files.
@@ -73,9 +73,20 @@ The package exports ten functions:
 - `list_reference_profiles()` and `list_reference_datasets()` expose inventory.
 - `regulatory_sources()` exposes official URLs and archival source hashes.
 
+The bank-analyst layer additionally exposes 34 individual regulatory and risk
+formula functions, nine domain-analysis functions, applied/fully-loaded metric
+and control accessors, result-table accessors, the formula and rule-set
+catalogues, canonical schemas and bitemporal snapshots. Regulatory parameters
+are inspectable and may be overridden non-destructively only with a reason and
+approval reference; the result preserves the old/new-value audit trail. A
+structurally changed formula remains a versioned code and test change rather
+than an ungoverned runtime expression. The complete inventory is in
+`docs/ANALYST_API.md`.
+
 The principal S3 result class is `rwa_calculation_result`. Its fields are
 `status`, `run_id`, `engine_version`, `rule_set_id`, `metrics`, `controls`,
-`validation`, `output_dir`, `output_files`, `results` and `parallel_results`.
+`validation`, `output_dir`, `output_files`, `results`, `parallel_results`,
+`parallel_metrics`, `parallel_controls` and `parameter_overrides`.
 `rwa_validation_report` converts to a six-column data frame. The condition
 hierarchy distinguishes configuration, parameter, resource, validation and
 calculation errors.
@@ -244,7 +255,7 @@ devtools::check()
 
 ```sh
 R CMD build .
-R CMD check --as-cran riskweightedassets_1.0.0.tar.gz
+R CMD check --as-cran riskweightedassets_1.1.0.tar.gz
 ```
 
 Linux, Windows and macOS CI plus Win-builder and R-hub release/oldrel/devel
