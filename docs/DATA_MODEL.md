@@ -1,5 +1,7 @@
 # Canonical data model and history
 
+Version 1.2.0: [SME/infrastructure supporting factors, eligibility inputs and audit outputs](SUPPORTING_FACTORS.md).
+
 ## Contract
 
 The canonical model contains 68 named tables distributed across 16 input

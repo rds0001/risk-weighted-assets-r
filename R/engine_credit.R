@@ -61,7 +61,8 @@ calculate_credit <- function(t, ctx, out) {
     sub_rw <- rwa_num(row_value(r, "substitution_rw", rw), rw)
     rwea_pre <- ead * rw
     rwea_post <- unprotected * rw + protected * sub_rw
-    sf <- rwa_num(row_value(r, "supporting_factor", 1), 1)
+    support <- resolve_support_exposure(t, r, p, "SA")
+    sf <- support$supporting_factor
     rwea_final <- rwea_post * sf
     rows[[i]] <- list(
       exposure_id = as.character(r$exposure_id), approach = as.character(r$approach),
@@ -74,6 +75,9 @@ calculate_credit <- function(t, ctx, out) {
       shadow_rwea = rwea_final,
       segments = if (nrow(segments)) paste(capture.output(dput(segments)), collapse = "") else "[]",
       formula_id = "SA_EAD/SA_RW", formula_version = ctx$formula_version)
+    rows[[i]][names(support)] <- support
+    rows[[i]]$rwea_pre_supporting_factor <- rwea_post
+    rows[[i]]$supporting_factor_relief <- rwea_post - rwea_final
   }
   sa_result <- rows_frame(rows)
   out$results$SA_Detail <- sa_result
@@ -116,7 +120,10 @@ calculate_credit <- function(t, ctx, out) {
       k <- irb_k(pdv, lgd, corr, rwa_num(r$maturity_years, 1), !retail,
                  defaulted, rwa_num(r$elbe), p)
       rw <- parameter_get(p, "RWA_MULTIPLIER", "PILLAR1") * k
-      rwea <- ead * rw; el_rate <- if (defaulted) rwa_num(r$elbe) else pdv * lgd
+      support <- resolve_support_exposure(t, r, p, "IRB")
+      rwea_before <- ead * rw
+      rwea <- rwea_before * support$supporting_factor
+      el_rate <- if (defaulted) rwa_num(r$elbe) else pdv * lgd
       coverage <- rwa_num(r$specific_credit_adjustments) + rwa_num(r$general_credit_adjustments)
       el <- ead * el_rate
       irb_rows[[i]] <- list(
@@ -127,9 +134,22 @@ calculate_credit <- function(t, ctx, out) {
         irb_shortfall = max(el - coverage, 0), irb_excess = max(coverage - el, 0),
         formula_id = if (retail) "IRB_RETAIL_K" else "IRB_CORP_K",
         formula_version = ctx$formula_version)
+      irb_rows[[i]][names(support)] <- support
+      irb_rows[[i]]$rwea_pre_supporting_factor <- rwea_before
+      irb_rows[[i]]$supporting_factor_relief <- rwea_before - rwea
+      irb_rows[[i]]$effective_rw <- rw * support$supporting_factor
     }
     irb_result <- rows_frame(irb_rows)
   }
+  if (!nrow(irb_result)) {
+    fields <- c(names(resolve_support(list(), NULL, "IRB")), "rwea_pre_supporting_factor",
+                "supporting_factor_relief", "effective_rw")
+    for (name in fields) irb_result[[name]] <- logical()
+  }
+  match_sa <- match(as.character(irb_result$exposure_id), as.character(sa_result$exposure_id))
+  irb_result$sa_comparison_supporting_factor <- sa_result$supporting_factor[match_sa]
+  irb_result$supporting_factor_path_difference <- abs(as.numeric(irb_result$supporting_factor) -
+    as.numeric(irb_result$sa_comparison_supporting_factor)) > 1e-10
   out$results$IRB_Detail <- irb_result
   out$metrics$RWEA_IRB <- sum_column(irb_result, "rwea")
   out$metrics$IRB_EL <- sum_column(irb_result, "el_amount")
@@ -141,4 +161,3 @@ calculate_credit <- function(t, ctx, out) {
               "SA and IRB detail reconciliation")
   invisible(out)
 }
-

@@ -1,5 +1,32 @@
 # Local verification record
 
+## Supporting-factor release 1.2.0 — 2026-09-19
+
+Linux x86_64, R 4.1.2. Candidate: `riskweightedassets_1.2.0.tar.gz`.
+SHA-256: `b39584d330afab48887e7a417b3fb0d76c4aa8e0ac01859b82640dededcd2714`.
+
+- `R CMD build .`: successful, including all vignettes.
+- `devtools::check(error_on="warning", args="--no-manual")`:
+  0 errors, 0 warnings, 1 NOTE (external current time could not be verified).
+- Connected `R CMD check --as-cran`: 0 errors, 0 warnings, 2 NOTEs:
+  New submission; external current time could not be verified.
+- Full devtools test stage: 222 passed, 0 failed, 0 warnings, 0 skipped.
+  The old local testthat locale warnings disappear when LC_ALL is unset for the
+  check process; no package behavior or tests were suppressed.
+- All 77 exports have Rd aliases. The four new public functions have individual
+  manpages, Markdown pages and executable examples. Both documentation PDFs
+  were regenerated.
+- New tests cover weighted/combined factors, eligibility evidence, invalid
+  inputs, unchanged K/EL, independently adjusted floor paths, Excel round trips
+  and full public calculations in applied and fully-loaded views.
+- Source boundary verification passes; no customer data or downloaded sources
+  were added. Historical reference outputs remain unchanged.
+
+This is the GitHub development release. The separate pending CRAN 1.1.1
+submission and its working directory were not modified.
+
+## Historical verification: version 1.1.0
+
 Date: 2026-09-14  
 Platform: Linux x86_64  
 R: 4.1.2  

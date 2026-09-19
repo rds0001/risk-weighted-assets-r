@@ -1,7 +1,7 @@
 # Public R API
 
 The public surface is deliberately granular and designed from the perspective
-of a bank analyst. It exposes 73 documented functions covering controlled
+of a bank analyst. It exposes 77 documented functions covering controlled
 workflows, individual formulae, domain views, parameters, schemas, metrics,
 tables and controls. Mutable orchestration internals remain private.
 
@@ -35,7 +35,7 @@ tables and controls. Mutable orchestration internals remain private.
 
 ## Analyst-level access and control
 
-- 34 formula functions cover SA, IRB, CRM, CCR, SFT, securitisation, CVA,
+- 38 formula functions cover SA, IRB, CRM, CCR, SFT, securitisation, CVA,
   settlement, operational risk, output floor, NPE, Tier 2, FRTB, IRRBB and
   correlated economic capital.
 - Nine `analyze_*()` functions return focused metrics, result tables and
@@ -90,3 +90,8 @@ metrics <- unlist(result$metrics[c("TREA", "CET1_RATIO")])
 ```
 
 Native manpages for every public function are installed with the package.
+
+## Credit supporting factors (1.2.0)
+
+Four new public functions cover SME, infrastructure, combined support and complete IRB RWEA.
+See [supporting-factor documentation](SUPPORTING_FACTORS.md) for inputs, eligibility, compatibility and audit output.

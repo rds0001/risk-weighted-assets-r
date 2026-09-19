@@ -29,7 +29,7 @@ advice and is not a certified regulatory reporting system.
 During development, build and install the local source package:
 
 ```r
-install.packages("riskweightedassets_1.1.0.tar.gz", repos = NULL, type = "source")
+install.packages("riskweightedassets_1.2.0.tar.gz", repos = NULL, type = "source")
 ```
 
 After CRAN acceptance the standard command will be:
@@ -51,7 +51,7 @@ result$metrics[c("RWEA_KSA", "RWEA_IRB", "TREA", "CET1_RATIO")]
 
 ## Granular analyst API
 
-The package exposes 73 documented public functions. Analysts can calculate an
+The package exposes 77 documented public functions. Analysts can calculate an
 individual formula, inspect or override a regulatory weight, extract one
 result table, compare applied and fully-loaded metrics, or obtain a focused
 risk-domain analysis without using private package internals.
@@ -133,3 +133,8 @@ rights and are not redistributed.
 - [Imprint](https://riskdatascience.net/impressum/)
 - [Privacy policy](https://riskdatascience.net/datenschutzerklaerung/)
 - [Legal and usage notice](inst/LEGAL.md)
+
+## Credit supporting factors (1.2.0)
+
+Four new public functions cover SME, infrastructure, combined support and complete IRB RWEA.
+See [supporting-factor documentation](docs/SUPPORTING_FACTORS.md) for inputs, eligibility, compatibility and audit output.

@@ -3,7 +3,6 @@ bibentry(
   title = "riskweightedassets: Reproducible Risk-Weighted Asset Calculations",
   author = person("RiskDataScience GmbH"),
   year = "2026",
-  note = "R package",
+  note = "R package version 1.2.0",
   url = "https://github.com/rds0001/risk-weighted-assets-r"
 )
-

@@ -1,5 +1,7 @@
 # Documentation map
 
+Version 1.2.0: [SME/infrastructure supporting factors, eligibility inputs and audit outputs](SUPPORTING_FACTORS.md).
+
 This documentation describes the R implementation itself. Regulatory source
 documents are not part of the repository or package.
 

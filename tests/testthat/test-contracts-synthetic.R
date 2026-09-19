@@ -1,13 +1,13 @@
 test_that("canonical fixtures preserve FALSE values and all table contracts", {
   tables <- generate_synthetic_tables()
   expect_equal(length(tables), 68L)
-  expect_equal(sum(vapply(tables, nrow, integer(1))), 14396L)
+  expect_equal(sum(vapply(tables, nrow, integer(1))), 14402L)
   expect_false(tables$sa_classification$short_term_flag[
     tables$sa_classification$exposure_id == "EXP-000001"
   ])
   expect_equal(sum(tables$sa_classification$short_term_flag), 66L)
   expect_equal(sum(tables$sa_classification$retail_eligible_flag), 517L)
-  expect_equal(nrow(tables$formula_definition), 39L)
+  expect_equal(nrow(tables$formula_definition), 40L)
   expect_setequal(
     tables$formula_definition$formula_id,
     names(rwa_internal("load_regulatory_config")()$formula_registry)
@@ -45,7 +45,8 @@ test_that("workbook generation round-trips through public validation", {
   expect_true(rwa_internal("validation_valid")(report))
   issues <- as.data.frame(report)
   expect_equal(sum(issues$severity == "ERROR"), 0L)
-  expect_equal(sum(issues$severity == "WARNING"), 17L)
+  expect_equal(sum(issues$severity == "WARNING"), 18L)
+  expect_equal(sum(issues$code == "LEGACY_SA_SUPPORTING_FACTOR"), 1L)
   loaded <- rwa_internal("read_input_workbooks")(file.path(dataset, "inputs"))$tables
   expect_false(loaded$sa_classification$short_term_flag[
     loaded$sa_classification$exposure_id == "EXP-000001"
