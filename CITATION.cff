@@ -5,7 +5,7 @@ type: software
 authors:
   - name: "RiskDataScience GmbH"
 version: 1.2.0
-date-released: 2026-09-14
+date-released: 2026-09-19
 license: GPL-3.0-only
 repository-code: "https://github.com/rds0001/risk-weighted-assets-r"
 url: "https://github.com/rds0001/risk-weighted-assets-r"
