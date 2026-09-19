@@ -129,6 +129,7 @@ generate_synthetic_tables <- function(as_of = NULL, seed = NULL,
   tables <- shift_temporal_columns(tables, profile, target_as_of)
   tables <- materialize_regulatory_parameters(tables, target_as_of)
   tables <- update_run_control(tables, target_as_of, effective_seed, bank_profile)
+  for (name in names(tables)) tables[[name]] <- normalize_support_columns(tables[[name]], name)
   tables <- apply_profile_transformations(tables, profile)
   report <- new_validation_report(validate_tables_internal(tables))
   if (!validation_valid(report)) {

@@ -1,3 +1,11 @@
+# riskweightedassets 1.2.0
+
+* Added four documented public supporting-factor functions (77 exports).
+* Applied verified SME/infrastructure factors to IRB RWEA without changing K or EL.
+* Added compatible optional Excel fields, traceable evidence and floor-path diagnostics.
+* Preserved legacy SA factors with explicit unverified-eligibility warnings.
+* Added boundary, eligibility, regression and output-floor tests.
+
 # riskweightedassets 1.1.0
 
 * Expanded the public API from 10 to 73 documented exports, designed around

@@ -1,0 +1,53 @@
+---
+title: "Credit supporting factors"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Credit supporting factors}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Independent analyst formulae
+
+```{r}
+library(riskweightedassets)
+sme_supporting_factor(5000000)
+infrastructure_supporting_factor()
+apply_credit_supporting_factors(1000000, 0.80595, 0.75)
+irb_risk_weighted_assets(1000000, 0.08, 0.80595, 0.75)
+```
+
+`sme_supporting_factor()` uses the reviewed Article 501 E* in EUR, not
+individual EAD. `infrastructure_supporting_factor()` reads the governed rate.
+`apply_credit_supporting_factors()` combines the independent factors.
+`irb_risk_weighted_assets()` leaves K unchanged and applies the factors to RWEA.
+
+# Table inputs and audit
+
+Both sa_classification and irb_parameter accept sme_supporting_eligible,
+infrastructure_supporting_eligible, sme_total_amount_owed_eur,
+supporting_factor_reference and supporting_factor_approved_by. The IRB table
+also accepts supporting_factor_type and supporting_factor. Leave the numeric
+factor blank to calculate it; a supplied value must match the computed product.
+
+Eligibility flags attest ALL legal conditions. The engine checks numeric and
+available classification data, but does not inspect bank contracts or certify
+qualitative conditions. Non-default status, eligible classes and required
+evidence are enforced before applying new support. SME and infrastructure may
+both apply. Parameter overrides require the existing reason/approval workflow.
+
+IRB_Detail and SA_Detail disclose pre-support RWEA, factor components, overall
+factor, relief, evidence, approver and status. IRB rw remains pre-support;
+effective_rw is post-support. sa_comparison_supporting_factor and
+supporting_factor_path_difference expose any difference between the two paths.
+
+# Compatibility and output floor
+
+Old IRB inputs default to no relief. Old SA factors remain reproducible but are
+marked LEGACY_SA_UNVERIFIED, with a validation warning. This is not an eligibility
+certificate. The factors are never silently copied between SA and IRB.
+
+Adjusted actual RWEA feeds U-TREA and independently adjusted SA comparison RWEA
+feeds S-TREA. The floor is then applied once in both applied and fully-loaded
+views. A binding floor can absorb an IRB-only reduction. Expected loss,
+shortfall and excess are not scaled.

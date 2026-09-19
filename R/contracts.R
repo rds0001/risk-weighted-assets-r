@@ -9,7 +9,11 @@ COMMON_COLUMNS <- c(
 table_contracts <- function() {
   path <- package_resource("extdata", "canonical", "table_contracts.rds")
   if (!file.exists(path)) abort_resource("Bundled table contracts are missing")
-  readRDS(path)
+  contracts <- readRDS(path)
+  for (name in c("sa_classification", "irb_parameter")) {
+    contracts[[name]]$columns <- unique(c(contracts[[name]]$columns, names(support_fields(name))))
+  }
+  contracts
 }
 
 canonical_date_columns <- c(
@@ -196,7 +200,7 @@ validate_tables_internal <- function(tables) {
                            "Curvature requires up and down revaluation"))
     }
   }
-  issues
+  c(issues, support_validation_issues(tables))
 }
 
 select_official_as_of <- function(frame, as_of_date, knowledge_time) {

@@ -1,5 +1,7 @@
 # Methodology
 
+Version 1.2.0: [SME/infrastructure supporting factors, eligibility inputs and audit outputs](SUPPORTING_FACTORS.md).
+
 This document describes the implemented analytical logic. It is not a legal
 interpretation of CRR III and cannot replace institution-specific regulatory
 assessment, permissions or supervisory reporting controls.

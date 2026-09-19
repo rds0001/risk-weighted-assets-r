@@ -1,6 +1,11 @@
 # Python-to-R parity contract
 
-The R package is a native port of Python package version 1.0.0, not a wrapper.
+The R package originated as a native port of Python package version 1.0.0, not a wrapper.
+Version 1.2.0 adds the same four supporting-factor functions and independent
+SA/IRB input semantics as Python 1.2.0. Both implementations test the shared
+numeric cases (SME E*=1m/2.5m/5m, infrastructure=0.75, combined=0.6044625),
+unchanged K/EL and binding/non-binding output floors. See
+[Supporting factors](SUPPORTING_FACTORS.md).
 
 ## Semantic mapping
 

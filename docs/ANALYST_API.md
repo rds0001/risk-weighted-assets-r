@@ -1,5 +1,7 @@
 # Bank-analyst API map
 
+Version 1.2.0: [SME/infrastructure supporting factors, eligibility inputs and audit outputs](SUPPORTING_FACTORS.md).
+
 The API is organized around questions an analyst must answer, not around the
 engine's internal call graph. All formula rates are decimals; monetary values
 use one caller-selected currency consistently. Regulatory defaults are visible

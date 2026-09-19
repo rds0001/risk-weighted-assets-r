@@ -33,6 +33,7 @@ read_input_workbooks <- function(directory) {
                            message = conditionMessage(frame)))
       next
     }
+    frame <- normalize_support_columns(frame, logical_name)
     missing <- setdiff(spec$columns, names(frame))
     if (length(missing)) {
       add(validation_issue("ERROR", "MISSING_COLUMNS", logical_name,
@@ -78,7 +79,7 @@ write_input_workbooks <- function(directory, tables) {
       spec <- groups[[workbook_name]][[logical_name]]
       data.frame(logical_table = logical_name, sheet = spec$sheet,
                  excel_table = spec$table_name, field = spec$columns,
-                 required = TRUE, description = gsub("_", " ", spec$columns),
+                 required = !spec$columns %in% names(support_fields(logical_name)), description = gsub("_", " ", spec$columns),
                  stringsAsFactors = FALSE)
     }))
     write_canonical_table(workbook, "DATA_DICTIONARY", dictionary, "tbl_doc_dictionary", header)
@@ -86,13 +87,14 @@ write_input_workbooks <- function(directory, tables) {
                           value = c("ACTIVE", "PROVISIONAL", "SIMULATED", "CANCELLED", "TRUE", "FALSE"))
     write_canonical_table(workbook, "_LOOKUPS", lookups, "tbl_doc_lookups", header)
     openxlsx::sheetVisibility(workbook)[which(openxlsx::sheets(workbook) == "_LOOKUPS")] <- "hidden"
-    changelog <- data.frame(template_version = "1.0.0", change_date = as.Date("2026-09-14"),
+    changelog <- data.frame(template_version = "1.2.0", change_date = as.Date("2026-09-19"),
                             change = "Initial canonical R data contract")
     write_canonical_table(workbook, "CHANGELOG", changelog, "tbl_doc_changelog", header)
     for (logical_name in names(groups[[workbook_name]])) {
       spec <- groups[[workbook_name]][[logical_name]]
       frame <- tables[[logical_name]]
       if (is.null(frame)) frame <- as.data.frame(setNames(replicate(length(spec$columns), character(), simplify = FALSE), spec$columns))
+      frame <- normalize_support_columns(frame, logical_name)
       for (field in setdiff(spec$columns, names(frame))) frame[[field]] <- NA
       frame <- frame[, spec$columns, drop = FALSE]
       write_canonical_table(workbook, spec$sheet, frame, spec$table_name, header)

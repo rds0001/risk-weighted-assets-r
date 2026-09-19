@@ -4,7 +4,7 @@ title: "riskweightedassets: Reproducible Risk-Weighted Asset Calculations"
 type: software
 authors:
   - name: "RiskDataScience GmbH"
-version: 1.1.0
+version: 1.2.0
 date-released: 2026-09-14
 license: GPL-3.0-only
 repository-code: "https://github.com/rds0001/risk-weighted-assets-r"
