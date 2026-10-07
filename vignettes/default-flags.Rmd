@@ -1,0 +1,36 @@
+---
+title: "Canonical default flags"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Canonical default flags}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Version 1.2.2 normalises exposure default flags once on the selected snapshot.
+SA, IRB, supporting-factor eligibility and both reporting views share the same
+boolean. SA detail now exposes the effective status as `defaulted`, as IRB does.
+
+Accepted true inputs are TRUE, 1, 1.0, and text TRUE / 1 / 1.0 / YES / JA.
+Accepted false inputs are FALSE, 0, 0.0, and text FALSE / 0 / 0.0 / NO / NEIN.
+Text is case-insensitive with surrounding whitespace removed.
+Missing values (NULL, NA, NaN), blank text, UNKNOWN, DEFAULT, Y, N, 2 and -1
+fail closed rather than implicitly selecting performing treatment.
+
+Use the same canonical `exposure_lot$default_flag` column with
+`calculate_tables()` or the equivalent Excel input. Caller tables are not modified.
+The existing FIRB/AIRB LGD-treatment formula contract remains unchanged.
+
+The test suite uses the same 31 scalar vectors as Python and public portfolio
+comparisons. For corporate CQS 3, EAD EUR 1 million, zero credit adjustments,
+no CRM and supporting factor 1, every true representation produces SA RW 1.5
+and RWEA EUR 1.5 million. Every false representation produces RW .75 and
+RWEA EUR 750,000.
+
+For FIRB defaults, K/RWEA remain zero and EL is LGD times EAD. With a binding
+72.5% floor, default TREA is EUR 1,087,500 per such exposure, independent of
+whether the input is TRUE, numeric 1.0 or text "1.0". Both applied and fully-loaded
+views, actual KSA, shadow RWEA, S-TREA and TREA are covered by the tests.
+
+This correction changes representation-sensitive results, not the regulatory
+reference parameters. Historical reference inputs remain unchanged.

@@ -43,6 +43,11 @@ validate_tables_public <- function(tables) {
 #' @details The return includes applied and fully-loaded result tables. All
 #'   calculations use one official bitemporal snapshot. The function does not
 #'   write files and does not change the global random-number stream.
+#'   Exposure `default_flag` values are normalised once on the selected snapshot.
+#'   Accepted inputs are logicals, numeric 0/1, and case-insensitive strings
+#'   TRUE/FALSE, 1/0, 1.0/0.0, YES/NO or JA/NEIN (whitespace is trimmed).
+#'   Missing or unknown values fail closed. Both SA and IRB detail tables expose
+#'   the effective status in `defaulted`, shared by both reporting views.
 #' @seealso [generate_synthetic_tables()], [calculate_dataset()]
 #' @examplesIf interactive()
 #' tables <- generate_synthetic_tables(bank_profile = "KSA_BANK")

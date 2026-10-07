@@ -1,3 +1,11 @@
+# riskweightedassets 1.2.2
+
+* Fixed inconsistent default_flag parsing between Standardised Approach and IRB.
+  Accepted representations are normalised once and shared by SA, IRB, KSA and
+  output-floor calculations; missing or ambiguous flags now fail closed.
+* Added SA_Detail.defaulted, shared Python/R vectors, and public portfolio tests.
+* Existing 1.2.1 default LGD-treatment contract and reference parameters retained.
+
 # riskweightedassets 1.2.1
 
 * Corrected supervisory-LGD FIRB defaults: K/RW/RWEA = 0; EL = LGD * EAD.
