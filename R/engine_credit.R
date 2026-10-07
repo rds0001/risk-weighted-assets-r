@@ -108,27 +108,30 @@ calculate_credit <- function(t, ctx, out) {
     irb_rows <- vector("list", nrow(base))
     for (i in seq_len(nrow(base))) {
       r <- base[i, , drop = FALSE]
-      pdv <- max(rwa_num(r$pd_estimate), rwa_num(r$pd_floor))
+      defaulted <- irb_default_flag(r$default_flag)
+      pdv <- irb_effective_pd(r$pd_estimate, defaulted, r$pd_floor)
       lgd <- max(rwa_num(r$lgd_estimate), rwa_num(r$lgd_floor))
       ead <- max(rwa_num(r$ead_estimate), rwa_num(r$ead_floor))
-      defaulted <- rwa_bool(r$default_flag); subclass <- as.character(r$irb_subclass)
+      subclass <- as.character(r$irb_subclass)
+      treatment <- irb_treatment_for(as.character(r$irb_approach), subclass)
       retail <- startsWith(subclass, "RETAIL")
       sales <- rwa_num(row_value(r, "annual_sales_eur", 0))
       corr <- if (retail) retail_correlation(pdv, subclass, p) else
         irb_correlation(pdv, if (sales) sales / 1e6 else NULL,
                         rwa_bool(r$financial_multiplier_flag), p)
       k <- irb_k(pdv, lgd, corr, rwa_num(r$maturity_years, 1), !retail,
-                 defaulted, rwa_num(r$elbe), p)
+                 defaulted, r$elbe, p, treatment)
       rw <- parameter_get(p, "RWA_MULTIPLIER", "PILLAR1") * k
       support <- resolve_support_exposure(t, r, p, "IRB")
       rwea_before <- ead * rw
       rwea <- rwea_before * support$supporting_factor
-      el_rate <- if (defaulted) rwa_num(r$elbe) else pdv * lgd
+      el_rate <- irb_resolve(pdv, lgd, defaulted, r$elbe, treatment)$el_rate
       coverage <- rwa_num(r$specific_credit_adjustments) + rwa_num(r$general_credit_adjustments)
       el <- ead * el_rate
       irb_rows[[i]] <- list(
         exposure_id = as.character(r$exposure_id), irb_approach = as.character(r$irb_approach),
         subclass = subclass, ead = ead, pd = pdv, lgd = lgd, r = corr,
+        pd_input = as.numeric(r$pd_estimate), defaulted = defaulted, lgd_treatment = treatment,
         m = rwa_num(r$maturity_years), k = k, rw = rw, rwea = rwea,
         el_rate = el_rate, el_amount = el, coverage = coverage,
         irb_shortfall = max(el - coverage, 0), irb_excess = max(coverage - el, 0),

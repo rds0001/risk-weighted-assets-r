@@ -29,7 +29,8 @@ irb_capital_requirement(
   apply_maturity_adjustment = TRUE,
   defaulted = FALSE,
   elbe = 0,
-  parameters = NULL
+  parameters = NULL,
+  lgd_treatment = NULL
 )
 }
 \arguments{
@@ -54,6 +55,10 @@ irb_capital_requirement(
 \item{defaulted}{Whether the exposure is defaulted.}
 
 \item{elbe}{Best estimate of expected loss for a defaulted exposure.}
+
+\item{lgd_treatment}{Required for defaults: \code{"SUPERVISORY"} (K = 0,
+ELBE ignored) or \code{"OWN_ESTIMATES"} (K = max(LGD - ELBE, 0)). Default
+normalises PD to 1; PD = 1 without default is rejected.}
 }
 \value{
 One numeric coefficient or capital-requirement rate.

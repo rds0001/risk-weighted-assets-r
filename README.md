@@ -1,5 +1,7 @@
 # riskweightedassets
 
+Version 1.2.1: [IRB default correction and API migration](docs/IRB_DEFAULT_CORRECTION.md).
+
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![R package](https://img.shields.io/badge/R-%3E%3D4.1-blue.svg)](DESCRIPTION)
 

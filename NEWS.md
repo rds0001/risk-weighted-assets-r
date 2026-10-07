@@ -1,3 +1,11 @@
+# riskweightedassets 1.2.1
+
+* Corrected supervisory-LGD FIRB defaults: K/RW/RWEA = 0; EL = LGD * EAD.
+* Unified default/PD handling; retained original PD and resolved LGD treatment.
+* Default formula calls require explicit lgd_treatment. Unsupported combinations
+  fail closed, including slotting (no separate implementation).
+* Added public-API default/capital regressions and documented API migration.
+
 # riskweightedassets 1.2.0
 
 * Added four documented public supporting-factor functions (77 exports).
