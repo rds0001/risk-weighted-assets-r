@@ -1,0 +1,38 @@
+---
+title: "IRB defaults and explicit LGD treatment"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{IRB defaults and explicit LGD treatment}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Default FIRB with supervisory LGD has zero K and EL equal to LGD times EAD.
+Own-estimate AIRB and retail use positive LGD minus ELBE for K and ELBE for EL.
+This corrects the default branch in version 1.2.0 (CRR Articles 153, 154, 158).
+
+```{r}
+library(riskweightedassets)
+irb_capital_requirement(1, .4, .2, 2.5, defaulted = TRUE, elbe = .1,
+                       lgd_treatment = "SUPERVISORY")
+irb_capital_requirement(1, .4, .2, 2.5, defaulted = TRUE, elbe = .1,
+                       lgd_treatment = "OWN_ESTIMATES")
+```
+
+For EAD 1,000,000 these give RWEA 0 / 3,750,000 and expected loss
+400,000 / 100,000 respectively. Coverage 250,000 produces FIRB shortfall
+150,000 and excess zero. The portfolio tests verify these values and their
+own-funds and output-floor consequences in both reporting views.
+
+Default calls require explicit lgd_treatment. Default normalises PD to one;
+a PD of one without default is rejected. Portfolio output retains pd_input,
+effective pd, defaulted and lgd_treatment. FIRB maps to SUPERVISORY;
+AIRB (including supported retail) maps to OWN_ESTIMATES.
+FIRB retail, unknown subclasses and unsupported approaches fail closed.
+Slotting has no separate implementation and must not be sent through this formula.
+The existing OTHER_RETAIL alias remains accepted by the direct correlation
+helper; canonical portfolio retail subclass is RETAIL_OTHER.
+
+Performing formulas, retail correlations and maturity-adjustment rules are
+unchanged. Published reference inputs are unchanged, and historical output
+snapshots must not be mistaken for acceptance results of the corrected version.

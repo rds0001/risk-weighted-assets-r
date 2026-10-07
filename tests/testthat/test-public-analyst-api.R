@@ -77,7 +77,14 @@ test_that("one result supports granular analyst views and applied/full compariso
 
 test_that("every exported function has an Rd alias", {
   exports <- getNamespaceExports("riskweightedassets")
-  aliases <- unique(unlist(lapply(tools::Rd_db("riskweightedassets"), function(rd) {
+  rd_database <- tools::Rd_db("riskweightedassets")
+  # Recent pkgload versions do not populate the installed help database when
+  # loading source. Parse the actual source manpages instead; never skip coverage.
+  if (!length(rd_database)) {
+    man <- system.file("man", package = "riskweightedassets")
+    rd_database <- lapply(list.files(man, pattern = "[.]Rd$", full.names = TRUE), tools::parse_Rd)
+  }
+  aliases <- unique(unlist(lapply(rd_database, function(rd) {
     nodes <- rd[vapply(rd, function(node) identical(attr(node, "Rd_tag"), "\\alias"), logical(1))]
     vapply(nodes, function(node) as.character(node[[1L]]), character(1))
   }), use.names = FALSE))

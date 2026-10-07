@@ -123,6 +123,8 @@ irb_correlation <- function(pd, annual_sales_million = NULL,
 }
 
 retail_correlation <- function(pd, subclass, params) {
+  if (!subclass %in% c("RETAIL_RESIDENTIAL", "RETAIL_QRRE", "RETAIL_OTHER", "OTHER_RETAIL"))
+    stop("Unsupported retail subclass: ", subclass, call. = FALSE)
   if (identical(subclass, "RETAIL_RESIDENTIAL")) return(parameter_get(params, "IRB_RETAIL", "RESIDENTIAL_R"))
   if (identical(subclass, "RETAIL_QRRE")) return(parameter_get(params, "IRB_RETAIL", "QRRE_R"))
   decay <- parameter_get(params, "IRB_RETAIL", "DECAY")
@@ -145,8 +147,10 @@ irb_maturity_adjustment <- function(pd, maturity, params) {
 }
 
 irb_k <- function(pd, lgd, correlation, maturity, apply_maturity_adjustment,
-                  defaulted, elbe, params) {
-  if (isTRUE(defaulted) || pd >= 1) return(max(lgd - elbe, 0))
+                  defaulted, elbe, params, lgd_treatment = NULL) {
+  state <- irb_resolve(pd, lgd, defaulted, elbe, lgd_treatment)
+  pd <- state$pd
+  if (!is.null(state$k)) return(state$k)
   if (pd <= 0) return(0)
   z <- normal_ppf(pd) / sqrt(1 - correlation) +
     sqrt(correlation / (1 - correlation)) * normal_ppf(parameter_get(params, "IRB", "CONFIDENCE_LEVEL"))

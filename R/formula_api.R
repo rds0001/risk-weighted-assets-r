@@ -93,6 +93,9 @@ crm_adjusted_exposure <- function(exposure, collateral, he, hc, hfx) {
 #' @param apply_maturity_adjustment Whether the maturity adjustment applies.
 #' @param defaulted Whether the exposure is defaulted.
 #' @param elbe Best estimate of expected loss for a defaulted exposure.
+#' @param lgd_treatment Required for defaults: `"SUPERVISORY"` (K = 0,
+#'   ELBE ignored) or `"OWN_ESTIMATES"` (K = max(LGD - ELBE, 0)). Default
+#'   normalises PD to 1; PD = 1 without default is rejected.
 #' @param parameters Optional parameter data frame or store.
 #' @return One numeric coefficient or capital-requirement rate.
 #' @seealso [regulatory_parameters()]
@@ -130,9 +133,9 @@ irb_maturity_factor <- function(pd, maturity, parameters = NULL) {
 irb_capital_requirement <- function(pd, lgd, correlation, maturity,
                                     apply_maturity_adjustment = TRUE,
                                     defaulted = FALSE, elbe = 0,
-                                    parameters = NULL) {
+                                    parameters = NULL, lgd_treatment = NULL) {
   irb_k(pd, lgd, correlation, maturity, apply_maturity_adjustment,
-        defaulted, elbe, as_public_parameter_store(parameters))
+        defaulted, elbe, as_public_parameter_store(parameters), lgd_treatment)
 }
 
 #' Counterparty, SFT, Securitisation, CVA and Settlement Formulae

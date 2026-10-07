@@ -1,5 +1,7 @@
 # Methodology
 
+Version 1.2.1: [IRB default correction and API migration](IRB_DEFAULT_CORRECTION.md).
+
 Version 1.2.0: [SME/infrastructure supporting factors, eligibility inputs and audit outputs](SUPPORTING_FACTORS.md).
 
 This document describes the implemented analytical logic. It is not a legal
