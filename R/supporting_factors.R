@@ -122,7 +122,10 @@ resolve_support <- function(row, params, approach) {
   sf <- inf <- 1
   status <- effective_type <- "NONE"
   if (sme || infra) {
-    if (support_flag(row[["default_flag"]])) stop("Supporting factors are not allowed on defaulted exposures", call. = FALSE)
+    # Parameter-only validation has no exposure context; the calculation join
+    # supplies the same canonical status used by SA and IRB.
+    if ("default_flag" %in% names(row) && regulatory_bool(row[["default_flag"]], "default_flag"))
+      stop("Supporting factors are not allowed on defaulted exposures", call. = FALSE)
     if (!nzchar(reference) || !nzchar(approver)) stop("Supporting factor requires reference and approved_by", call. = FALSE)
     cls <- rwa_text(row[[if (approach == "IRB") "irb_subclass" else "exposure_class"]])
     if (sme) {

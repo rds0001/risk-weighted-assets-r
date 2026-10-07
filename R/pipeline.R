@@ -125,6 +125,7 @@ execute_tables <- function(raw, run_id, project_root = NULL, initial_issues = li
   if (is.na(as_of) || is.na(knowledge)) abort_calculation("Invalid as_of_date or knowledge_time in run_config")
   snapshot <- lapply(raw, select_official_as_of, as_of_date = as_of, knowledge_time = knowledge)
   snapshot <- apply_official_designations(raw, snapshot)
+  snapshot <- normalize_exposure_defaults(snapshot)
   params <- new_parameter_store(snapshot$regulatory_parameter)
   applied_rule <- rule_context(snapshot, cfg[["rule_set_id"]])
   context <- new_calculation_context(as_of, knowledge, cfg[["rule_set_id"]], params,

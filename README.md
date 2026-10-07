@@ -1,5 +1,7 @@
 # riskweightedassets
 
+Version 1.2.2: [Canonical default flags and regression cases](docs/DEFAULT_FLAG_NORMALIZATION.md).
+
 Version 1.2.1: [IRB default correction and API migration](docs/IRB_DEFAULT_CORRECTION.md).
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)

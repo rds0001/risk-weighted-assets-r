@@ -37,6 +37,11 @@ output. A parallel fully-loaded result is calculated from the same snapshot.
 The return includes applied and fully-loaded result tables. All
 calculations use one official bitemporal snapshot. The function does not
 write files and does not change the global random-number stream.
+Exposure \code{default_flag} values are normalised once on the selected snapshot.
+Accepted inputs are logicals, numeric 0/1, and case-insensitive strings
+TRUE/FALSE, 1/0, 1.0/0.0, YES/NO or JA/NEIN (whitespace is trimmed).
+Missing or unknown values fail closed. Both SA and IRB detail tables expose
+the effective status in \code{defaulted}, shared by both reporting views.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

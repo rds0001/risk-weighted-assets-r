@@ -3,6 +3,8 @@
 
 calculate_credit <- function(t, ctx, out) {
   p <- ctx$parameters
+  # Resolve each selected exposure once, before either SA or IRB branches.
+  t <- normalize_exposure_defaults(t)
   exp_df <- t$exposure_lot
   sa <- t$sa_classification
   re_df <- t$real_estate_exposure
@@ -41,7 +43,7 @@ calculate_credit <- function(t, ctx, out) {
     rw <- sa_base_risk_weight(
       as.character(r$exposure_class), as.integer(rwa_num(r$credit_quality_step)),
       rwa_bool(r$short_term_flag), rwa_bool(r$transactor_flag),
-      rwa_bool(r$retail_eligible_flag), rwa_bool(r$default_flag), coverage,
+      rwa_bool(r$retail_eligible_flag), r$default_flag, coverage,
       rwa_text(row_value(r, "specialised_lending_type")), p)
     segments <- data.frame()
     if (!is.na(row_value(r, "property_type", NA))) {
@@ -69,6 +71,7 @@ calculate_credit <- function(t, ctx, out) {
       exposure_class = as.character(r$exposure_class), ead_on = ead_on,
       ead_off = ead_off, ccf = parameter_get(p, "SA_CCF", as.character(r$annex_i_class)),
       ead = ead, risk_weight = rw, protected_amount = protected,
+      defaulted = r$default_flag,
       substitution_rw = sub_rw, rwea_pre_crm = rwea_pre, rwea_post_crm = rwea_post,
       supporting_factor = sf, rwea = rwea_final,
       actual_rwea = if (identical(as.character(r$approach), "KSA")) rwea_final else 0,
@@ -108,7 +111,7 @@ calculate_credit <- function(t, ctx, out) {
     irb_rows <- vector("list", nrow(base))
     for (i in seq_len(nrow(base))) {
       r <- base[i, , drop = FALSE]
-      defaulted <- irb_default_flag(r$default_flag)
+      defaulted <- r$default_flag
       pdv <- irb_effective_pd(r$pd_estimate, defaulted, r$pd_floor)
       lgd <- max(rwa_num(r$lgd_estimate), rwa_num(r$lgd_floor))
       ead <- max(rwa_num(r$ead_estimate), rwa_num(r$ead_floor))

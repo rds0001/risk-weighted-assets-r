@@ -1,10 +1,6 @@
 # Shared default contract for formula and portfolio APIs.
 irb_default_flag <- function(value) {
-  if (length(value) != 1L || is.na(value)) stop("default_flag must be an explicit boolean", call. = FALSE)
-  text <- toupper(trimws(as.character(value)))
-  if (text %in% c("TRUE", "1", "1.0", "YES", "JA")) return(TRUE)
-  if (text %in% c("FALSE", "0", "0.0", "NO", "NEIN")) return(FALSE)
-  stop("default_flag must be an explicit boolean", call. = FALSE)
+  regulatory_bool(value, "default_flag")
 }
 
 irb_rate <- function(value, name) {
