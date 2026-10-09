@@ -19,5 +19,6 @@ parse_knowledge_time <- function(value) {
     }
   } else invalid()
   if (is.na(result) || !is.finite(as.numeric(result))) invalid()
+  attr(result, "tzone") <- "UTC"
   result
 }
