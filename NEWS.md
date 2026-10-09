@@ -1,3 +1,11 @@
+# riskweightedassets 1.2.3
+
+* Preserve the full UTC knowledge timestamp in official_snapshot(), including
+  ISO strings from run_config; use the same parser in portfolio calculations.
+* Add regression coverage for implicit/explicit snapshots, date-only and
+  fractional-second timestamps, missing values and malformed input.
+* Includes all corrections from 1.2.0–1.2.2 in the CRAN update from 1.1.1.
+
 # riskweightedassets 1.2.2
 
 * Fixed inconsistent default_flag parsing between Standardised Approach and IRB.

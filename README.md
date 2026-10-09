@@ -1,6 +1,8 @@
 # riskweightedassets
 
-Version 1.2.2: [Canonical default flags and regression cases](docs/DEFAULT_FLAG_NORMALIZATION.md).
+Version 1.2.3: [UTC snapshot timestamp correction](docs/SNAPSHOT_TIME.md).
+
+Retained from 1.2.2: [Canonical default flags and regression cases](docs/DEFAULT_FLAG_NORMALIZATION.md).
 
 Version 1.2.1: [IRB default correction and API migration](docs/IRB_DEFAULT_CORRECTION.md).
 

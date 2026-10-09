@@ -40,7 +40,7 @@ The function writes 16 canonical workbooks plus a dataset manifest.
 An existing non-empty target requires \code{overwrite = TRUE}.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 generate_synthetic_dataset(file.path(tempdir(), "rwa-runs"),
                            bank_profile = "KSA_BANK")
 \dontshow{\}) # examplesIf}

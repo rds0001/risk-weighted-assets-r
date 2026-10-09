@@ -16,7 +16,7 @@ A list with identity, core metrics, controls and overrides.
 Compact Calculation Summary
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 r <- calculate_tables(generate_synthetic_tables(bank_profile = "KSA_BANK"))
 rwa_summary(r)
 \dontshow{\}) # examplesIf}

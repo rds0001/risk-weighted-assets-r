@@ -11,13 +11,20 @@ official_snapshot(tables, as_of_date = NULL, knowledge_time = NULL)
 
 \item{as_of_date}{Optional business date; defaults to \code{run_config}.}
 
-\item{knowledge_time}{Optional knowledge timestamp; defaults to \code{run_config}.}
+\item{knowledge_time}{Optional knowledge timestamp; defaults to \code{run_config}.
+Accepts a POSIXt instant or a UTC string with a T or space separator,
+optional fractional seconds and optional trailing Z. Date-only values
+denote midnight UTC. Missing, malformed or non-scalar values are rejected.}
 }
 \value{
 Canonical tables reduced to the effective official records.
 }
 \description{
 Select the Official Bitemporal Snapshot
+}
+\details{
+The time-of-day is preserved, including when read from \code{run_config}.
+The same timestamp parser is used by \code{\link[=calculate_tables]{calculate_tables()}}.
 }
 \examples{
 t <- generate_synthetic_tables(bank_profile = "KSA_BANK")

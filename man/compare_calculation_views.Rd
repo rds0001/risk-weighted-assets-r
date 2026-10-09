@@ -16,7 +16,7 @@ A data frame with both values and their difference.
 Compare Applied and Fully-loaded Metrics
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 r <- calculate_tables(generate_synthetic_tables(bank_profile = "KSA_BANK"))
 compare_calculation_views(r)
 \dontshow{\}) # examplesIf}

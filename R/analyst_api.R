@@ -208,6 +208,11 @@ table_schema <- function(table) {
 #' @param tables Canonical table list.
 #' @param as_of_date Optional business date; defaults to `run_config`.
 #' @param knowledge_time Optional knowledge timestamp; defaults to `run_config`.
+#'   Accepts a POSIXt instant or a UTC string with a T or space separator,
+#'   optional fractional seconds and optional trailing Z. Date-only values
+#'   denote midnight UTC. Missing, malformed or non-scalar values are rejected.
+#' @details The time-of-day is preserved, including when read from `run_config`.
+#'   The same timestamp parser is used by [calculate_tables()].
 #' @return Canonical tables reduced to the effective official records.
 #' @examples
 #' t <- generate_synthetic_tables(bank_profile = "KSA_BANK")
@@ -216,7 +221,7 @@ table_schema <- function(table) {
 official_snapshot <- function(tables, as_of_date = NULL, knowledge_time = NULL) {
   cfg <- run_configuration(tables)
   as_of_date <- as_of_date %||% as.Date(cfg[["as_of_date"]])
-  knowledge_time <- knowledge_time %||% as.POSIXct(sub("Z$", "", cfg[["knowledge_time"]]), tz = "UTC")
+  knowledge_time <- parse_knowledge_time(knowledge_time %||% cfg[["knowledge_time"]])
   snapshot <- lapply(tables, select_official_as_of,
                      as_of_date = as.Date(as_of_date), knowledge_time = knowledge_time)
   apply_official_designations(tables, snapshot)

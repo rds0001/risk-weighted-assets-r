@@ -21,7 +21,7 @@ Output is written below \verb{dataset/outputs/<run-id>}. The run ID
 fingerprints the input files, code and package version.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 root <- file.path(tempdir(), "rwa-calculation-example")
 dataset <- generate_synthetic_dataset(root, bank_profile = "KSA_BANK")
 calculate_dataset(dataset)

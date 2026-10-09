@@ -18,7 +18,7 @@ An \code{rwa_domain_analysis} with relevant metrics, tables and controls.
 Analyse Credit Risk
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 analyze_credit_risk(generate_synthetic_tables(bank_profile = "KSA_BANK"))
 \dontshow{\}) # examplesIf}
 }

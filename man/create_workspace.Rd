@@ -19,7 +19,7 @@ Exports the package's synthetic reference environment to a caller-controlled
 directory. Existing non-empty directories require explicit \code{overwrite}.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 workspace <- create_workspace(file.path(tempdir(), "rwa-example"), overwrite = TRUE)
 print(workspace)
 \dontshow{\}) # examplesIf}

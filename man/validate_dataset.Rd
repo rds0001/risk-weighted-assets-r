@@ -17,7 +17,7 @@ Reads and validates all canonical input workbooks without calculating or
 writing any output files.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 root <- file.path(tempdir(), "rwa-validation-example")
 dataset <- generate_synthetic_dataset(root, bank_profile = "KSA_BANK")
 as.data.frame(validate_dataset(dataset))

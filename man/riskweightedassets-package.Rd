@@ -31,5 +31,10 @@ Useful links:
 \author{
 \strong{Maintainer}: RiskDataScience GmbH \email{riskdatascience@web.de} [copyright holder]
 
+Authors:
+\itemize{
+  \item RiskDataScience GmbH \email{riskdatascience@web.de} [copyright holder]
+}
+
 }
 \keyword{internal}
