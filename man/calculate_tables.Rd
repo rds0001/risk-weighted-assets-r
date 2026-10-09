@@ -44,7 +44,7 @@ Missing or unknown values fail closed. Both SA and IRB detail tables expose
 the effective status in \code{defaulted}, shared by both reporting views.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 tables <- generate_synthetic_tables(bank_profile = "KSA_BANK")
 result <- calculate_tables(tables)
 result$metrics[c("RWEA_KSA", "TREA")]

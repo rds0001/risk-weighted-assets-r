@@ -18,7 +18,7 @@ Character vector of result-table names.
 List Result-Table Names
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 r <- calculate_tables(generate_synthetic_tables(bank_profile = "KSA_BANK"))
 rwa_table_names(r)
 \dontshow{\}) # examplesIf}

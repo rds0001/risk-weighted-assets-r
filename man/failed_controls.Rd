@@ -18,7 +18,7 @@ A data frame containing only failed controls.
 Failed Calculation Controls
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 r <- calculate_tables(generate_synthetic_tables(bank_profile = "KSA_BANK"))
 failed_controls(r)
 \dontshow{\}) # examplesIf}

@@ -82,9 +82,13 @@ export(table_dictionary)
 export(table_schema)
 export(tier2_eligible_amount)
 export(validate_dataset)
-importFrom(stats,aggregate)
-importFrom(stats,setNames)
-importFrom(utils,capture.output)
-importFrom(utils,head)
-importFrom(utils,modifyList)
-importFrom(utils,tail)
+importFrom(stats,
+  aggregate,
+  setNames
+)
+importFrom(utils,
+  capture.output,
+  head,
+  modifyList,
+  tail
+)

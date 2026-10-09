@@ -1,5 +1,24 @@
 # riskweightedassets — complete documentation
 
+# Snapshot timestamps — 1.2.3
+
+The public `official_snapshot()` helper previously parsed an ISO knowledge-time
+string without an explicit format. Under affected R versions this truncated
+`2026-08-31T23:59:59` to midnight and could omit same-day records.
+The KSA reference case selected zero instead of 30 business-indicator rows.
+
+The helper and `calculate_tables()` now share one internal UTC parser.
+Accepted inputs are POSIXt instants, UTC strings with T or space separators,
+optional fractional seconds and optional trailing Z, and date-only values
+(midnight UTC). Missing, malformed and non-scalar values raise a structured
+configuration error. Function signatures, dependencies and source data are unchanged.
+
+Regression tests compare the implicit run_config snapshot with an explicit
+23:59:59 UTC snapshot, retain all 30 expected rows, verify midnight selection,
+exercise the supported timestamp formats and reject invalid values.
+Caller-owned tables are unchanged.
+
+
 # Canonical default flags — 1.2.2
 
 The technical representation of a default must never change its regulatory result.
@@ -140,7 +159,7 @@ rejection of ambiguous/unsupported inputs. Existing aggregation and own-funds
 rules are retained; this patch does not redesign the coverage allocation model.
 
 
-Version 1.2.2 documentation
+Version 1.2.3 documentation
 Copyright © 2026 RiskDataScience GmbH  
 License: GNU General Public License version 3
 
@@ -162,7 +181,7 @@ or supervisory approval.
 R 4.1 or newer is required. Install a built source package with:
 
 ```r
-install.packages("riskweightedassets_1.2.2.tar.gz", repos = NULL, type = "source")
+install.packages("riskweightedassets_1.2.3.tar.gz", repos = NULL, type = "source")
 library(riskweightedassets)
 ```
 
@@ -395,7 +414,7 @@ devtools::check()
 
 ```sh
 R CMD build .
-R CMD check --as-cran riskweightedassets_1.2.2.tar.gz
+R CMD check --as-cran riskweightedassets_1.2.3.tar.gz
 ```
 
 Linux, Windows and macOS CI plus Win-builder and R-hub release/oldrel/devel
